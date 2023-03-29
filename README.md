@@ -2,101 +2,98 @@
 
 ![Preview failed to load!](https://github.com/aatanas/LinuxKernelFileManager/blob/main/preview.png?raw=true)
 
-Cilj ovog projekta je obezbediti dva alata za Linux - file explorer i clipboard.
-Napisan je u C i assembly unutar Linux kernela. Alat funkcioniše i dok je
-pokrenuta neka korisnička aplikacija. Podržava sledeće funkcionalnosti:
+The goal of this project is to provide two tools for Linux - file explorer and clipboard.
+It is written in C and assembly within the Linux kernel. The tool also works while
+some user application is running. It supports the following functionalities:
 
-- U jednom trenutku je prikazan jedan od dva alata. Taster F2 bira koji alat je prikazan.
-Alat se prikazuje u gornjem desnom uglu ekrana.
-- Explorer alat omogućava obilazak fajlova na disku i kopiranje putanje do odabranog
-fajla u terminal.
-- Clipboard alat omogućava zabeležavanje stringova, i njihovo kopiranje u terminal.
-
-Snimak sa primerom korišćenja svih funkcionalnosti je dat na materijalima.
+- One of the two tools is displayed at one point. The F2 key selects which tool is displayed.
+The tool is displayed in the upper right corner of the screen.
+- The Explorer tool allows browsing the files on the disk and copying the path to the selected one
+file to the terminal.
+- The Clipboard tool allows you to record strings and copy them to the terminal.
 
 
-#### Prikaz alata
-Oba alata će biti prikazana u gornjem desnom uglu ekrana i nalaze se u
-pravougaoniku sačinjenom od ‘#’ karaktera. Dimenzija ovog “prozora” je 20x10
-karaktera korisnog prostora, tj. 22x12 računajući i okvir.
-Oba alata prikazuju tekst poravnat centralno.
-Kod explorer alata koriste se različite boje za različite tipove datoteka na disku:
+#### Display of the tools
+Both tools will be displayed in the upper right corner of the screen and are located in the
+a rectangle made up of the '#' character. The dimension of this "window" is 20x10 characters of useful space, i.e. 22x12 including frame.
+Both tools display text centered.
+The explorer tool uses different colors for different types of files on the disk:
 
-- Obične datoteke - standardna siva boja
-- Direktorijumi - svetlo plava
-- Izvršne datoteke - zelena
-- Karakter uređaji - žuta
+- Regular files - standard gray color
+- Directories - light blue
+- Executable files - green
+- Character devices - yellow
 
-Kod explorer alata se prikazuje prvih 10 stavki unutar direktorijuma. 
-U oba alata trenutno selektovana stavka je markirana izmenjenom bojom
-pozadine.
-Vrh “prozora” prikazuje trenutnu putanju kod explorer alata, i tekst “clipboard” kod
-clipboard alata.
-Na početku rada sistema nije prikazan nijedan alat. Po prvom pritisku na F2 taster se
-prikazuje explorer alat, postavljen u koreni (“/”) direktorijum. Promena alata se obavlja
-pritiskom na F2 taster.
+With the explorer tool, the first 10 items in the directory are displayed.
+In both tools, the currently selected item is marked with a changed color
+backgrounds.
+The top of the "window" shows the current path of the explorer tool, and the text "clipboard" in
+clipboard tool.
+At the start of the system, no tools are displayed. After pressing the F2 key for the first time,
+the explorer tool is shown, placed in the root ("/") directory. Tool change is activated
+by pressing the F2 key.
 
-#### Rad sa explorerom
-Komande za explorer se unose preko tastature, i to su:
-|R. br.| Taster| Ponašanje|
+#### Working with explorer
+Explorer commands are entered via the keyboard, and they are:
+|No.| Key| Behavior|
 |--- |---|---|
-|1. |F1 |Aktivira strelice i space|
-|2. |F2 |Menja trenutno aktivni alat sa explorer na clipboard|
-|3. |Strelica gore |Prethodna datoteka (radi samo uz pritisnuto F1)|
-|4. |Strelica dole |Naredna datoteka (radi samo uz pritisnuto F1)|
-|5. |Strelica levo |Parent direktorijum (radi samo uz pritisnuto F1)|
-|6. |Strelica desno |Uđi u direktorijum (radi samo uz pritisnuto F1)|
-|7. |Space |Kopira putanju do selektovane stavke u terminal (radi samo uz pritisnuto F1)|
+|1. |F1 |Activates arrows and space|
+|2. |F2 |Changes the currently active tool from explorer to clipboard|
+|3. |Up arrow |Previous file (only works with F1 pressed)|
+|4. |Down arrow |Next file (only works with F1 pressed)|
+|5. |Left arrow |Parent directory (only works with F1 pressed)|
+|6. |Right arrow |Enter directory (only works with F1 pressed)|
+|7. |Space |Copies the path to the selected item in the terminal (works only with F1 pressed)|
 
-Strelice se koriste za obilaženje fajl sistema, a space se koristi za kopiranje putanje do
-selektovane datoteke u terminal, s time da funkcionišu na ovaj način samo dok se
-drži F1. U slučaju da je F1 pritisnuto, strelice i space obavljaju samo ovu funkciju, ne
-i svoju normalnu funkciju. U slučaju da F1 nije pritisnuto, strelice i space se
-ponašaju normalno. Ako smo na poslednjoj stavci, strelica dole nas vodi na prvu stavku, i
-ako smo na prvoj stavci, strelica gore nas vodi na poslednju stavku.
+Arrows are used to navigate the file system, and space is used to copy the path to
+selected files to the terminal, but they function in this way only while
+holding F1. In case F1 is pressed, arrows and space only perform this function, their normal is disabled.
+In case F1 is not pressed, the arrows and space are displayed
+they behave normally. If we are on the last item, the down arrow takes us to the first item,
+if we are on the first item, the up arrow takes us to the last item.
 
-F tasteri ne obavljaju svoju normalnu operaciju ispisivanja slova A / B / C na
-terminalu.
+The F keys do not perform their normal operation of printing the letters A / B / C on
+the terminal.
 
-Strelica desno radi samo ako je selektovan direktorijum, i u tom slučaju, to postaje
-novi aktivni direktorijum, i njegova sadržina se ispisuje u exploreru. Ako je selektovana neka
-datoteka, ispisuje se greška.
+The right arrow only works if a directory is selected, and in that case, it becomes that
+a new active directory, and its contents are printed in the explorer. If any is selected
+file, an error is printed.
 
-Strelica levo nas vraća u roditeljski direktorijum (“..”). Ako se nalazimo u korenom
-direktorijumu, strelica levo nema nikakvog efekta. Kod obe ove strelice se čisti explorer blok 
-pre ispisivanja sadržaja novog direktorijuma.
+The left arrow takes us back to the parent directory (".."). If we are in the root
+directory, the left arrow has no effect. Both of these arrows clear the explorer block
+before writing the contents of the new directory.
 
-Space kopira punu putanju do trenutno selektovane datoteke / direktorijuma u
-terminal. Funkcioniše i kada unosimo komande za operativni sistem (shell) i
-kada se nalazimo u korisničkoj aplikaciji.
+Space copies the full path to the currently selected file/directory to
+terminal. It also works when we enter commands for the operating system (shell) and
+when we are in the user application.
 
-#### Rad sa clipboardom
-Komande za clipboard se unose preko tastature, i to su:
-|R. br.| Taster| Ponašanje|
+#### Working with the clipboard
+Commands for the clipboard are entered via the keyboard, and they are:
+|No.| Key| Behavior|
 |---|---|---|
-|1. |F1 |Aktivira strelice i space|
-|2. |F2 |Menja trenutno aktivni alat sa clipboard na explorer|
-|3. |F3 |Započinje / završava upis nove stavke u clipboard|
-|4. |Strelica gore |Prethodna stavka (radi samo uz pritisnuto F1)|
-|5. |Strelica dole |Naredna stavka (radi samo uz pritisnuto F1)|
-|6. |Space |Kopira trenutnu stavku u terminal (radi samo uz pritisnuto F1)|
+|1. |F1 |Activates arrows and space|
+|2. |F2 |Changes the currently active tool from clipboard to explorer|
+|3. |F3 |Starts / finishes recording a new item in the clipboard|
+|4. |Up arrow |Previous item (only works with F1 pressed)|
+|5. |Down arrow |Next item (only works with F1 pressed)|
+|6. |Space |Copies the current item to the terminal (only works with F1 pressed)|
 
-Strelice se koriste za selektovanje stavke unutar clipboarda, i space se koristi za kopiranje
-te stavke u terminal, s time da treba da funkcionišu na ovaj način samo dok se drži F1. U
-slučaju da je F1 pritisnuto, strelice i space obavljaju samo ovu funkciju, ne i svoju
-normalnu funkciju. U slučaju da F1 nije pritisnuto, strelice i space se ponašaju
-normalno. Ako smo na poslednjoj stavci, strelica dole nas vodi na prvu stavku, i ako smo na
-prvoj stavci, strelica gore nas vodi na poslednju stavku.
+Arrows are used to select items within the clipboard, and space is used to copy
+those items into the terminal, but they only function in this way while holding down F1.
+If F1 is pressed, the arrows and space only perform this function, not their own
+normal function. In case F1 is not pressed, arrows and spacebar behave
+normally. If we are on the last item, the down arrow takes us to the first item, and if we are on
+the first item, the up arrow takes us to the last item.
 
-F tasteri ne obavljaju svoju normalnu operaciju ispisivanja slova A / B / C na
-terminalu.
+The F keys do not perform their normal operation of printing the letters A / B / C on
+the terminal.
 
-Space kopira trenutno selektovanu stavku u terminal. Ovo funkcioniše i
-kada unosimo komande za operativni sistem (shell) i kada se nalazimo u korisničkoj
-aplikaciji.
+Space copies the currently selected item to the terminal. This works too
+when we enter commands for the operating system (shell) and when we are in the user interface
+application.
 
-F3 taster započinje upis stavke u clipboard. Trenutno selektovana stavka se ne briše na
-početku unosa, već se nastavlja rad od kraja stavke. Backspace taster omogućava
-brisanje teksta unutar clipboarda, ako on postoji. Ako nema teksta, backspace nema efekta.
-Ponovni pritisak na taster F3 prekida unos u clipboard. Dok se unose podaci u clipboard
-nije moguće interagovati sa terminalom.
+The F3 key starts writing an item to the clipboard. The currently selected item is not deleted
+at the beginning of the entry, work continues from the end of the item. Backspace key enables
+erasing the text inside the clipboard, if it exists. If there is no text, backspace has no effect.
+Pressing the F3 key again interrupts the clipboard entry. While entering data into the clipboard
+it is not possible to interact with the terminal.
