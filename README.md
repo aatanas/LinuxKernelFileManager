@@ -3,8 +3,8 @@
 ![Preview failed to load!](https://github.com/aatanas/LinuxKernelFileManager/blob/main/preview.png?raw=true)
 
 The goal of this project is to provide two tools for Linux - file explorer and clipboard.
-It is written in C and assembly within the Linux kernel. The tool also works while
-some user application is running. It supports the following functionalities:
+It is written in C and assembly within the Linux kernel. The tool works while
+some user application is also running. It supports the following functionalities:
 
 - One of the two tools is displayed at one point. The F2 key selects which tool is displayed.
 The tool is displayed in the upper right corner of the screen.
