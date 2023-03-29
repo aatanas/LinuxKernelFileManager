@@ -1,5 +1,7 @@
 # LinuxKernelFileManager
 
+![Preview failed to load!](https://github.com/aatanas/LinuxKernelFileManager/blob/main/preview.png?raw=true)
+
 Cilj ovog projekta je obezbediti dva alata za Linux - file explorer i clipboard.
 Napisan je u C i assembly unutar Linux kernela. Alat funkcioniše i dok je
 pokrenuta neka korisnička aplikacija. Podržava sledeće funkcionalnosti:
