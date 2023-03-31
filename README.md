@@ -8,7 +8,7 @@ some user application is also running. It supports the following functionalities
 
 - One of the two tools is displayed at one point. The F2 key selects which tool is displayed.
 The tool is displayed in the upper right corner of the screen.
-- The Explorer tool allows browsing the files on the disk and copying the path to the selected one
+- The Explorer tool allows browsing the files on the disk and copying the path of the selected
 file to the terminal.
 - The Clipboard tool allows you to record strings and copy them to the terminal.
 
